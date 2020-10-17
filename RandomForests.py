@@ -1,4 +1,6 @@
 
+#Use pandas for messing with the csv
+import pandas as pd
 #Use matplotlib for plots
 import matplotlib.pyplot as plt
 # Use numpy to convert to arrays
@@ -8,8 +10,12 @@ from sklearn.ensemble import RandomForestRegressor
 # Using Skicit-learn to split data into training and testing sets
 from sklearn.model_selection import train_test_split
 
-features =
-labels = 
+data_orig = pd.read_csv("football_data.csv")
+data = data_orig.copy()
+
+print(data.columns)
+features = data.drop('Feature', axis=1)
+labels = data['Feature']
 
 # Split the data into training and testing sets
 train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size = 0.25, random_state = 42)
