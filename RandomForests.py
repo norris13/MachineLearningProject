@@ -15,7 +15,13 @@ data = data_orig.copy()
 
 print(data.columns)
 features = data.drop('Offensive Elo Rating', axis=1)
-labels = data['Offensive Elo Rating']
+target = data['Offensive Elo Rating']
+
+feature_list = list(features.columns)
+
+#Convert features and labels into numpy arrays
+features  = np.array(features)
+labels = np.array(target)
 
 # Split the data into training and testing sets
 train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size = 0.25, random_state = 42)
@@ -34,3 +40,12 @@ rf.fit(train_features, train_labels)
 predictions = rf.predict(test_features)
 # Calculate the absolute errors
 errors = abs(predictions - test_labels)
+
+# Print out the mean absolute error (mae)
+print('Mean Absolute Error:', round(np.mean(errors), 2), 'degrees.')
+
+# Calculate mean absolute percentage error (MAPE)
+mape = 100 * (errors / test_labels)
+# Calculate and display accuracy
+accuracy = 100 - np.mean(mape)
+print('Accuracy:', round(accuracy, 2), '%.')
