@@ -47,6 +47,7 @@ elo_data = data.assign(homeOffElo = homeOff, awayOffElo = awayOff, homeDefElo = 
 # print(elo_data)
 
 # Format data for conversion
+#since you're reusing my code here you might want to edit this line below depending on what you're looking for - Jamahl
 features = elo_data.drop( ['homeOffPoints', 'homeTeam', 'awayTeam'], axis=1 )
 target = elo_data['homeOffPoints']
 
