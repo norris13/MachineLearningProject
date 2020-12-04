@@ -9,6 +9,7 @@ import numpy as np
 # Import the model we are using
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
+from sklearn import metrics
 # Using Skicit-learn to split data into training and testing sets
 from sklearn.model_selection import train_test_split
 
@@ -26,13 +27,6 @@ home_off_elo = []
 home_def_elo = []
 away_off_elo = []
 away_def_elo = []
-
-# for column in data: 
-#     # Select column contents by column 
-#     # name using [] operator 
-#     columnSeriesObj = data[column] 
-#     print('Colunm Name : ', column) 
-#     print('Column Contents : ', columnSeriesObj.values) 
 
       
 # Select column contents by column 
@@ -59,9 +53,9 @@ for i in range(num_rows):
     away_def_elo.insert(i, elos[ awayTeamNames[i] ][ str(year[i]) ][ str(week[i]) ]['def'])
 
 elo_data = data.assign(homeOffElo = home_off_elo, awayOffElo = away_off_elo, homeDefElo = home_def_elo, awayDefElo = away_def_elo)
-print(elo_data)
+#print(elo_data)
 
-features = elo_data.drop( ['homeOffPoints', 'count', 'homeTeam', 'awayTeam'], axis=1 )
+features = elo_data.drop( ['homeOffPoints', 'count', 'homeTeam', 'awayTeam', 'week', 'season',], axis=1 )
 
 target = elo_data['homeOffPoints']
 
@@ -91,7 +85,8 @@ rf.fit(train_features, train_labels)
 # Use the forest's predict method on the test data
 predictions = rf.predict(test_features)
 
-from sklearn import metrics
+print(predictions[:20])
+print(test_labels[:20])
 
 print('Mean Absolute Error:', metrics.mean_absolute_error(test_labels, predictions))
 print('Mean Squared Error:', metrics.mean_squared_error(test_labels, predictions))
