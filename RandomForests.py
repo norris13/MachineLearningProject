@@ -55,7 +55,7 @@ for i in range(num_rows):
 elo_data = data.assign(homeOffElo = home_off_elo, awayOffElo = away_off_elo, homeDefElo = home_def_elo, awayDefElo = away_def_elo)
 #print(elo_data)
 
-features = elo_data.drop( ['homeOffPoints', 'count', 'homeTeam', 'awayTeam', 'week', 'season',], axis=1 )
+features = elo_data.drop( ['homeOffPoints', 'homeDefPoints', 'awayOffPoints', 'awayDefPoints','count', 'homeTeam', 'awayTeam', 'week', 'season',], axis=1 )
 
 target = elo_data['homeOffPoints']
 
