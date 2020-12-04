@@ -23,7 +23,7 @@ data_orig = pd.read_csv("allSeasonScores.csv")
 data = data_orig.copy()
 
 # Create arrays for elos
-homeOff = homeDef = awayOff = awayDef = []
+homeOff = []
 homeDef = []
 awayOff = []
 awayDef = []
