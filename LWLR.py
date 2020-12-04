@@ -14,6 +14,29 @@ jsonObject
 jsonObj[teamAbbr][year][week][unit]
 where unit is either 'off' or 'def'
 '''
+
+# Function definitions
+def parseName(name):
+    switcher = {
+        "HO" : "homeOffPoints",
+        "AO" : "awayOffPoints",
+        "HD" : "homeDefPoints",
+        "AD" : "awayDefPoints"
+    }
+    return switcher.get(name, "nothing")
+
+def dataPick():
+    name = input("Enter what data you want to see (HO for home offense, AO for away offense, HD for home defense, AD for away defense): ")
+    parsed = parseName(name)
+    if parsed == "nothing":
+        print("Please try again.")
+        return dataPick()
+    return parsed
+
+# Ask what data the user wants
+dataName = dataPick()
+print(dataName)
+
 # Load elo rankings
 with open("eloVals.json") as file:
     elos = json.load(file)
@@ -47,9 +70,8 @@ elo_data = data.assign(homeOffElo = homeOff, awayOffElo = awayOff, homeDefElo = 
 # print(elo_data)
 
 # Format data for conversion
-#since you're reusing my code here you might want to edit this line below depending on what you're looking for - Jamahl
-features = elo_data.drop( ['homeOffPoints', 'homeTeam', 'awayTeam'], axis=1 )
-target = elo_data['homeOffPoints']
+features = elo_data.drop( [dataName, 'homeTeam', 'awayTeam'], axis=1 )
+target = elo_data[dataName]
 
 # Convert features and labels into numpy arrays
 features  = np.array(features)
@@ -72,14 +94,15 @@ fitted = lr.fit(train_features, train_labels)
 lrPred = lr.predict(test_features)
 
 # Output Error
+print("------------------------------------------------------------------------------------------------------------------------")
 print('LR Mean Absolute Error:', metrics.mean_absolute_error(test_labels, lrPred))
 print('LR Mean Squared Error:', metrics.mean_squared_error(test_labels, lrPred))
 print('LR Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(test_labels, lrPred)))
 
 # Plot
 fig = plt.figure()
-plt.plot(train_features, train_labels, 'r.', markersize = 1)
-plt.plot(test_features, lrPred, 'b-', markersize = 1)
+plt.plot(train_features, train_labels, 'r.', markersize = 2)
+plt.plot(test_features, lrPred, 'b-', markersize = 2)
 plt.legend(('Data', 'Linear Fit'), loc='lower right')
 plt.show()
 
