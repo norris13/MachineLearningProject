@@ -35,7 +35,14 @@ def dataPick():
 
 # Ask what data the user wants
 dataName = dataPick()
-print(dataName)
+nameSwitch = {
+        "homeOffPoints" : "Home Offense",
+        "awayOffPoints" : "Away Offense",
+        "homeDefPoints" : "Home Defense",
+        "awayDefPoints" : "Away Defense"
+    }
+realName = nameSwitch.get(dataName, "nothing")
+print(realName)
 
 # Load elo rankings
 with open("eloVals.json") as file:
@@ -99,11 +106,15 @@ print('LR Mean Absolute Error:', metrics.mean_absolute_error(test_labels, lrPred
 print('LR Mean Squared Error:', metrics.mean_squared_error(test_labels, lrPred))
 print('LR Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(test_labels, lrPred)))
 
+
 # Plot
 fig = plt.figure()
-plt.plot(train_features, train_labels, 'r.', markersize = 2)
-plt.plot(test_features, lrPred, 'b-', markersize = 2)
-plt.legend(('Data', 'Linear Fit'), loc='lower right')
+plt.plot(range(100), test_labels[:100], 'r.')
+plt.plot(range(100), lrPred[:100], 'b-')
+plt.legend(('Test Labels', 'Prediction Labels'), loc='upper left')
+plt.title('Score of ' + realName, loc = 'center')
+plt.xlabel('Game Number Chronologically (starting from 1999)')
+plt.ylabel('Points Scored')
 plt.show()
 
 '''
