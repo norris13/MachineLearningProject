@@ -85,12 +85,22 @@ rf.fit(train_features, train_labels)
 # Use the forest's predict method on the test data
 predictions = rf.predict(test_features)
 
-print(predictions[:20])
-print(test_labels[:20])
+# print(predictions[:20])
+# print(test_labels[:20])
 
 print('Mean Absolute Error:', metrics.mean_absolute_error(test_labels, predictions))
 print('Mean Squared Error:', metrics.mean_squared_error(test_labels, predictions))
 print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(test_labels, predictions)))
+
+fig = plt.figure(1)
+#plt.plot(train_features, train_labels, 'r.', markersize = 2)
+plt.title("Predicting Total Points Scored by Home Team")
+plt.plot( range(0,20), predictions[:20], 'b-', markersize = 2)
+plt.plot(range(0,20), test_labels[:20], 'r-', markersize = 2)
+plt.ylabel("Total Points Scored by Home Team")
+plt.xlabel("Each Test Performed (Indexes of Predictions and Test Label Lists Up to 20)" )
+plt.legend(('Test Labels', 'Random Forests'), loc='lower right')
+plt.show()
 
 #mse = mean_squared_error(test_labels, predictions)
 #rmse = math.sqrt(mse)
