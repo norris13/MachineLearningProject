@@ -92,17 +92,14 @@ print('Mean Absolute Error:', metrics.mean_absolute_error(test_labels, predictio
 print('Mean Squared Error:', metrics.mean_squared_error(test_labels, predictions))
 print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(test_labels, predictions)))
 
+#plot predictions vs actual labels
 fig = plt.figure(1)
-#plt.plot(train_features, train_labels, 'r.', markersize = 2)
+
 plt.title("Predicting Total Points Scored by Home Team")
-plt.plot( range(0,20), predictions[:20], 'b-', markersize = 2)
-plt.plot(range(0,20), test_labels[:20], 'r-', markersize = 2)
+plt.plot( range(0,50), predictions[:50], 'b.', markersize = 3)
+plt.plot(range(0,50), test_labels[:50], 'r-', markersize = 2)
 plt.ylabel("Total Points Scored by Home Team")
-plt.xlabel("Each Test Performed (Indexes of Predictions and Test Label Lists Up to 20)" )
-plt.legend(('Test Labels', 'Random Forests'), loc='lower right')
+plt.xlabel("Each Test Performed (Indices of Predictions and Test Label Lists Up to 20)" )
+plt.legend(('Prediction', 'Actual'), loc='lower right')
 plt.show()
 
-#mse = mean_squared_error(test_labels, predictions)
-#rmse = math.sqrt(mse)
-#print('Accuracy for Random Forest',100*max(0,rmse)) 
-#print('Accuracy for Random Forest',max(0,mse)) 
